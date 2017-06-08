@@ -28,24 +28,24 @@ open SourceLink
 
 // The name of the project
 // (used by attributes in AssemblyInfo, name of a NuGet package and directory in 'src')
-let project = "##ProjectName##"
+let project = "sync-addin-for-outlook-and-jira"
 
 // Short summary of the project
 // (used as description in AssemblyInfo and as a short summary for NuGet package)
-let summary = "##Summary##"
+let summary = "Sync Addin for Outlook and JIRA"
 
 // Longer description of the project
 // (used as a description for NuGet package; line breaks are automatically cleaned up)
-let description = "##Description##"
+let description = "Sync Addin for Outlook and JIRA"
 
 // List of author names (for NuGet package)
-let authors = [ "##Author##" ]
+let authors = [ "David Podhola" ]
 
 // Tags for your project (for NuGet package)
-let tags = "##Tags##"
+let tags = "sync outlook JIRA"
 
 // File system information
-let solutionFile  = "##ProjectName##.sln"
+let solutionFile  = "sync-addin-for-outlook-and-jira.sln"
 
 // Default target configuration
 let configuration = "Release"
@@ -55,14 +55,14 @@ let testAssemblies = "tests/**/bin" </> configuration </> "*Tests*.dll"
 
 // Git configuration (used for publishing documentation in gh-pages branch)
 // The profile where the project is posted
-let gitOwner = "##GitHome##"
-let gitHome = sprintf "%s/%s" "##GitUrl##" gitOwner
+let gitOwner = "Update GitHome in build.fsx"
+let gitHome = sprintf "%s/%s" "https://github.com" gitOwner
 
 // The name of the project on GitHub
-let gitName = "##GitName##"
+let gitName = "sync-addin-for-outlook-and-jira"
 
 // The url for the raw files hosted
-let gitRaw = environVarOrDefault "gitRaw" "##GitRawUrl##/##GitHome##"
+let gitRaw = environVarOrDefault "gitRaw" "https://raw.githubusercontent.com/Update GitHome in build.fsx"
 
 // --------------------------------------------------------------------------------------
 // END TODO: The rest of the file includes standard build steps
@@ -380,20 +380,10 @@ Target "All" DoNothing
   ==> "Build"
   ==> "CopyBinaries"
   ==> "RunTests"
-  ==> "GenerateReferenceDocs"
-  ==> "GenerateDocs"
-#if MONO
-#else
-  =?> ("SourceLink", Pdbstr.tryFind().IsSome )
-#endif
   ==> "NuGet"
   ==> "BuildPackage"
   ==> "All"
   =?> ("ReleaseDocs",isLocalBuild)
-
-"GenerateHelp"
-  ==> "GenerateReferenceDocs"
-  ==> "GenerateDocs"
 
 "GenerateHelpDebug"
   ==> "KeepRunning"

@@ -1,4 +1,4 @@
-﻿namespace FSharp.ProjectTemplate
+namespace sync_addin_for_outlook_and_jira
 
 /// Documentation for my library
 ///
@@ -12,5 +12,5 @@ module Library =
   /// Returns 42
   ///
   /// ## Parameters
-  ///  - `num` - whatever
+  ///  _ `num` _ whatever
   let hello num = 42

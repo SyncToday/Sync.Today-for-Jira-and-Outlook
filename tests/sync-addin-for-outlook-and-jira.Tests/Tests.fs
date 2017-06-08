@@ -1,6 +1,6 @@
-﻿module FSharp.ProjectScaffold.Tests
+module sync_addin_for_outlook_and_jira.Tests
 
-open FSharp.ProjectTemplate
+open sync_addin_for_outlook_and_jira
 open NUnit.Framework
 
 [<Test>]

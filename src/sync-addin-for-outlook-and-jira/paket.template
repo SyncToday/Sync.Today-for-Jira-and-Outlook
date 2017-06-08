@@ -1,0 +1,25 @@
+type project
+title
+    sync-addin-for-outlook-and-jira
+owners
+    David Podhola
+authors 
+    David Podhola
+projectUrl
+    https://github.com/[github-user]/sync-addin-for-outlook-and-jira
+iconUrl
+    https://raw.githubusercontent.com/[github-user]/sync-addin-for-outlook-and-jira/master/docs/files/img/logo.png
+licenseUrl
+    https://github.com/[github-user]/sync-addin-for-outlook-and-jira/blob/master/LICENSE.txt
+requireLicenseAcceptance
+    false
+copyright
+    Copyright 2015
+tags
+    sync outlook JIRA
+summary
+    Sync Addin for Outlook and JIRA
+description
+    Sync Addin for Outlook and JIRA
+
+
