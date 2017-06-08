@@ -8,3 +8,9 @@ let ``hello returns 42`` () =
   let result = Library.hello 42
   printfn "%i" result
   Assert.AreEqual(42,result)
+
+[<Test>]
+let ``download works`` () =
+  System.Net.ServicePointManager.ServerCertificateValidationCallback <- (fun _ _ _ _ -> true)
+  let result : string = Library.JIRA.download "davidpodhola" "PASSWORD"
+  printfn "%A" result
