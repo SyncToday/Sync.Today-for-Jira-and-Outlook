@@ -15,4 +15,7 @@ IF NOT EXIST build.fsx (
   .paket\paket.exe update
   packages\build\FAKE\tools\FAKE.exe init.fsx
 )
+
+IF EXIST "C:\Secrets\TestSecrets.fs" ( COPY C:\Secrets\TestSecrets.fs .\Tests\ )
+
 packages\build\FAKE\tools\FAKE.exe build.fsx %*
