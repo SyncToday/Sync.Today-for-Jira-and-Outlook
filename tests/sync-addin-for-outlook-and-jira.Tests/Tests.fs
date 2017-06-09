@@ -2,6 +2,7 @@ module sync_addin_for_outlook_and_jira.Tests
 
 open sync_addin_for_outlook_and_jira
 open NUnit.Framework
+open TestSecrets
 
 [<Test>]
 let ``hello returns 42`` () =
@@ -12,5 +13,5 @@ let ``hello returns 42`` () =
 [<Test>]
 let ``download works`` () =
   System.Net.ServicePointManager.ServerCertificateValidationCallback <- (fun _ _ _ _ -> true)
-  let result : string = Library.JIRA.download "davidpodhola" "PASSWORD"
+  let result : string = Library.JIRA.download JIRA.userName JIRA.password
   printfn "%A" result
