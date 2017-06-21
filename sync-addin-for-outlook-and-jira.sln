@@ -1,6 +1,7 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{63297B98-5CED-492C-A5B7-A5B4F73CF142}"
 	ProjectSection(SolutionItems) = preProject
 		paket.dependencies = paket.dependencies
@@ -34,6 +35,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{ED8079DD
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "sync-addin-for-outlook-and-jira.Tests", "tests\sync-addin-for-outlook-and-jira.Tests\sync-addin-for-outlook-and-jira.Tests.fsproj", "{B9E70EC1-97D1-4592-BD84-1CA88692B9B4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutlookAddIn2013", "src\OutlookAddIn2013\OutlookAddIn2013.csproj", "{C5794E2B-315C-44CE-9FE4-2E244B11DC1B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +51,10 @@ Global
 		{B9E70EC1-97D1-4592-BD84-1CA88692B9B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9E70EC1-97D1-4592-BD84-1CA88692B9B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9E70EC1-97D1-4592-BD84-1CA88692B9B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5794E2B-315C-44CE-9FE4-2E244B11DC1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5794E2B-315C-44CE-9FE4-2E244B11DC1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5794E2B-315C-44CE-9FE4-2E244B11DC1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5794E2B-315C-44CE-9FE4-2E244B11DC1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
