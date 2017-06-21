@@ -60,8 +60,8 @@ module UI =
     let GetLabel_label_Version (link:DateTime) = ""
     let Button_SyncNow_Click() = ()
     let Button_StopSync_Click() = ()
-    let Button_Settings_Click() =
+    let Button_Settings_Click() = ()
+    let Button_Log_Click() = 
         match findLatestLogFile() with
         | Some( s ) -> Process.Start( s ) |> ignore
         | _ -> ()        
-    let Button_Log_Click() = ()

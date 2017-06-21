@@ -13,5 +13,5 @@ let ``hello returns 42`` () =
 [<Test>]
 let ``download by assignee works`` () =
   System.Net.ServicePointManager.ServerCertificateValidationCallback <- (fun _ _ _ _ -> true)
-  let result : string = Library.JIRA.downloadByAssignee JIRA.userName JIRA.password
+  let result : string = Library.JIRA.downloadByAssignee JIRA.server JIRA.userName JIRA.password
   printfn "%A" result

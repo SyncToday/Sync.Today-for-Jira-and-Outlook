@@ -18,9 +18,9 @@ module Library =
   let hello num = 42
 
   module JIRA =
-    let downloadByAssignee (userName:string) (password:string) = 
+    let downloadByAssignee (server:string) (userName:string) (password:string) = 
       Http.RequestString( 
-        ( sprintf "https://a.hsharp.software/rest/api/2/search?jql=assignee=%s" userName), httpMethod = HttpMethod.Get,
+        ( sprintf "%s/rest/api/2/search?jql=assignee=%s" server userName), httpMethod = HttpMethod.Get,
         headers = [ HttpRequestHeaders.Accept("application/json"); HttpRequestHeaders.ContentType("application/json");  
           ( HttpRequestHeaders.BasicAuth userName password )
         ]
