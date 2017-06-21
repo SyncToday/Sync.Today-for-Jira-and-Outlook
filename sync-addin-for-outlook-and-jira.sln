@@ -37,6 +37,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "sync-addin-for-outlook-and-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutlookAddIn2013", "src\OutlookAddIn2013\OutlookAddIn2013.csproj", "{C5794E2B-315C-44CE-9FE4-2E244B11DC1B}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "OutlookAddin.Func", "src\OutlookAddin.Func\OutlookAddin.Func.fsproj", "{279EFEA3-2A2B-4071-8B72-D1FCD87FCBAC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{C5794E2B-315C-44CE-9FE4-2E244B11DC1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5794E2B-315C-44CE-9FE4-2E244B11DC1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5794E2B-315C-44CE-9FE4-2E244B11DC1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{279EFEA3-2A2B-4071-8B72-D1FCD87FCBAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{279EFEA3-2A2B-4071-8B72-D1FCD87FCBAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{279EFEA3-2A2B-4071-8B72-D1FCD87FCBAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{279EFEA3-2A2B-4071-8B72-D1FCD87FCBAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

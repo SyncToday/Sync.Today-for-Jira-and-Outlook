@@ -20,6 +20,11 @@ namespace OutlookAddIn2013
             //    must run when Outlook shuts down, see http://go.microsoft.com/fwlink/?LinkId=506785
         }
 
+        protected override Microsoft.Office.Core.IRibbonExtensibility CreateRibbonExtensibilityObject()
+        {
+            return new Ribbon();
+        }
+
         #region VSTO generated code
 
         /// <summary>
