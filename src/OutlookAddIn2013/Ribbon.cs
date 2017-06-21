@@ -94,6 +94,10 @@ namespace OutlookAddIn2013
             return UI.GetLabel_label_Version( Functions.RetrieveLinkerTimestamp() );
         }
 
+        public void Button_SyncNow_Click(Office.IRibbonControl control) { UI.Button_SyncNow_Click(); }
+        public void Button_StopSync_Click(Office.IRibbonControl control) { UI.Button_StopSync_Click(); }
+        public void Button_Settings_Click(Office.IRibbonControl control) { UI.Button_Settings_Click(); }
+        public void Button_Log_Click(Office.IRibbonControl control) { UI.Button_Log_Click(); }
 
         #endregion
 
