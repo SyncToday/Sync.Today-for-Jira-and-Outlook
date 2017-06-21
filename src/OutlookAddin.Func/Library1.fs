@@ -4,7 +4,9 @@ open System
 
 module Common = 
     open Microsoft.ApplicationInsights
+    open Serilog
     let tc : TelemetryClient = TelemetryClient()
+    let log = LoggerConfiguration().MinimumLevel.Debug().WriteTo.RollingFile("%TMP%\sync-addin-for-outlook-and-jira-{Date}.txt").CreateLogger()
 
 module UI = 
 
@@ -37,9 +39,11 @@ module UI =
 module Log = 
     open Common
 
-    let fatal (ex:Exception) =
+    let fatal (ex:Exception, source:string) =
+        log.Fatal(ex, sprintf "Unhandled exception in %A" source)
         tc.TrackException(ex)
         tc.Flush()
     let view (ident:string) = 
+        log.Information(sprintf "Form %s opened" ident )
         tc.TrackPageView(ident)
         tc.Flush()

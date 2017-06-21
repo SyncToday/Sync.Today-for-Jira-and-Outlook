@@ -29,7 +29,7 @@ namespace OutlookAddIn2013
         {
             var ex = e.ExceptionObject as System.Exception;
 
-            Log.fatal(ex);
+            Log.fatal(ex, "UnhandledExceptionHandler");
 
             if (ex is ApplicationException)
             {
