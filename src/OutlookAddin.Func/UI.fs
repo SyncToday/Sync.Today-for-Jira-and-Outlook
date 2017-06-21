@@ -26,14 +26,19 @@ module Log =
         tc.Context.Session.Id <- sprintf "%s-%s" Environment.MachineName (yymmdd1 DateTime.Now)
         tc.Context.Device.OperatingSystem <- Environment.OSVersion.ToString()
 
-    let fatal (ex:Exception, source:string) =
+    let fatal (source:string) (ex:Exception)  =
         log.Fatal(ex, sprintf "Unhandled exception in %A" source)
         tc.TrackException(ex)
         tc.Flush()
+    
     let view (ident:string) = 
         log.Information(sprintf "Form %s opened" ident )
         tc.TrackPageView(ident)
         tc.Flush()
+
+    let applicationError (source:string) (message:string) (ex:Exception) =
+        fatal source ex
+        System.Windows.Forms.MessageBox.Show(message, "An error occurred", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error) |> ignore
 
     let findLatestLogFile () = 
         let path = Path.GetDirectoryName( Environment.ExpandEnvironmentVariables( logFilePatternSeriLog ) )
@@ -50,6 +55,7 @@ module UI =
     open System.Diagnostics
     open Log
     open System.Windows.Forms
+    open sync_addin_for_outlook_and_jira.Library.Common
 
     let Button_SyncNow_GetEnabled () = true
     let Button_StopSync_GetEnabled () = true
@@ -62,7 +68,11 @@ module UI =
     let GetLabel_label_Version (link:DateTime) = ""
     let Button_SyncNow_Click server userName password = 
         view "SyncNow"
-        sync_addin_for_outlook_and_jira.Library.JIRA.downloadByAssignee server userName password |> ignore
+        let download = sync_addin_for_outlook_and_jira.Library.JIRA.downloadByAssignee server userName password
+        match download with
+        | Success(issues) -> ()
+        | Failure(ex) -> ex |> applicationError "downloadByAssignee" "Download from JIRA failed."
+
     let Button_StopSync_Click() = ()
     let Button_Settings_Click(form:Form) =
         view "Settings"

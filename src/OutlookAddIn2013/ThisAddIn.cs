@@ -29,13 +29,8 @@ namespace OutlookAddIn2013
         {
             var ex = e.ExceptionObject as System.Exception;
 
-            Log.fatal(ex, "UnhandledExceptionHandler");
-
-            if (ex is ApplicationException)
-            {
-                var ae = (ApplicationException)ex;
-                Ribbon.Message_InternalLoadingError(ae.Message);
-            }
+            Log.applicationError("UnhandledExceptionHandler", "Unexpected error occured", ex);
+            Ribbon.Message_InternalLoadingError(ex.Message);
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
