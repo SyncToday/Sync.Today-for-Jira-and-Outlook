@@ -6,7 +6,9 @@ module Common =
     open Microsoft.ApplicationInsights
     open Serilog
     let tc : TelemetryClient = TelemetryClient()
-    let log = LoggerConfiguration().MinimumLevel.Debug().WriteTo.RollingFile("%TMP%\sync-addin-for-outlook-and-jira-{Date}.txt").CreateLogger()
+    let logFileName = "%TMP%\sync-addin-for-outlook-and-jira-%s.txt"
+    let log = 
+        LoggerConfiguration().MinimumLevel.Debug().WriteTo.RollingFile( sprintf (Printf.StringFormat<string->string>(logFileName)) "{Date}" ).CreateLogger()
 
 module UI = 
 
