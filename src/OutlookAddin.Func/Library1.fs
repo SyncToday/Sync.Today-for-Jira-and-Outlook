@@ -11,7 +11,8 @@ module Common =
     let logFilePatternSearch = sprintf (Printf.StringFormat<string->string>(logFileName)) "*"
     let log = 
         LoggerConfiguration().MinimumLevel.Debug().WriteTo.RollingFile( Environment.ExpandEnvironmentVariables( logFilePatternSeriLog ) ).CreateLogger()
-
+    do 
+        System.Net.ServicePointManager.ServerCertificateValidationCallback <- (fun _ _ _ _ -> true)
 
 module Log = 
     open Common

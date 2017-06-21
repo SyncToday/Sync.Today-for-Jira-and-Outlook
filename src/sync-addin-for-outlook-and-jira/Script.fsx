@@ -3,6 +3,3 @@
 
 #load "Library.fs"
 open sync_addin_for_outlook_and_jira
-
-let num = Library.hello 42
-printfn "%i" num

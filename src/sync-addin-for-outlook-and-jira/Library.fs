@@ -10,18 +10,18 @@ open FSharp.Data
 ///     printfn "%d" h
 ///
 module Library = 
-  
-  /// Returns 42
-  ///
-  /// ## Parameters
-  ///  _ `num` _ whatever
-  let hello num = 42
+    module JIRA =
+        open Types.JIRA
 
-  module JIRA =
-    let downloadByAssignee (server:string) (userName:string) (password:string) = 
-      Http.RequestString( 
-        ( sprintf "%s/rest/api/2/search?jql=assignee=%s" server userName), httpMethod = HttpMethod.Get,
-        headers = [ HttpRequestHeaders.Accept("application/json"); HttpRequestHeaders.ContentType("application/json");  
-          ( HttpRequestHeaders.BasicAuth userName password )
-        ]
-      )
+        let downloadByAssignee (server:string) (userName:string) (password:string) = 
+            let convert (root:Issues.Root) : Issue [] = 
+                root.Issues |> Array.map( fun p -> { Key = p.Key; Summary = p.Fields.Summary } ) 
+
+            Http.RequestString( 
+                ( sprintf "%s/rest/api/2/search?jql=assignee=%s" server userName), httpMethod = HttpMethod.Get,
+                headers = [ HttpRequestHeaders.Accept("application/json"); HttpRequestHeaders.ContentType("application/json");  
+                    ( HttpRequestHeaders.BasicAuth userName password )
+                ]
+            )
+            |> Issues.Parse
+            |> convert

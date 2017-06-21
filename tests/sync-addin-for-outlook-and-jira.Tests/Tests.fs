@@ -5,13 +5,7 @@ open NUnit.Framework
 open TestSecrets
 
 [<Test>]
-let ``hello returns 42`` () =
-  let result = Library.hello 42
-  printfn "%i" result
-  Assert.AreEqual(42,result)
-
-[<Test>]
 let ``download by assignee works`` () =
-  System.Net.ServicePointManager.ServerCertificateValidationCallback <- (fun _ _ _ _ -> true)
-  let result : string = Library.JIRA.downloadByAssignee JIRA.server JIRA.userName JIRA.password
-  printfn "%A" result
+    System.Net.ServicePointManager.ServerCertificateValidationCallback <- (fun _ _ _ _ -> true)
+    let result = Library.JIRA.downloadByAssignee JIRA.server JIRA.userName JIRA.password
+    Assert.IsTrue( result.Length > 0 )
