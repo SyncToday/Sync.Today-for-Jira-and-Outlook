@@ -6,11 +6,11 @@ module Common =
     open Microsoft.ApplicationInsights
     open Serilog
     let tc : TelemetryClient = TelemetryClient()
-    let logFileName = "%TMP%\sync-addin-for-outlook-and-jira-%s.txt"
+    let logFileName = "%%TMP%%\sync-addin-for-outlook-and-jira-%s.txt"
     let logFilePatternSeriLog = sprintf (Printf.StringFormat<string->string>(logFileName)) "{Date}"
     let logFilePatternSearch = sprintf (Printf.StringFormat<string->string>(logFileName)) "*"
     let log = 
-        LoggerConfiguration().MinimumLevel.Debug().WriteTo.RollingFile( logFilePatternSeriLog ).CreateLogger()
+        LoggerConfiguration().MinimumLevel.Debug().WriteTo.RollingFile( Environment.ExpandEnvironmentVariables( logFilePatternSeriLog ) ).CreateLogger()
 
 
 module Log = 
@@ -35,9 +35,9 @@ module Log =
         tc.Flush()
 
     let findLatestLogFile () = 
-        let path = Path.GetFullPath( Environment.ExpandEnvironmentVariables( logFilePatternSeriLog ) )
+        let path = Path.GetDirectoryName( Environment.ExpandEnvironmentVariables( logFilePatternSeriLog ) )
         let di = path |> DirectoryInfo
-        di.GetFiles( logFilePatternSearch ) 
+        di.GetFiles( Path.GetFileName( logFilePatternSearch ) ) 
         |> Array.sortByDescending( fun p -> p.LastWriteTime ) 
         |> Array.tryHead
         |> Option.map( fun p -> p.FullName )

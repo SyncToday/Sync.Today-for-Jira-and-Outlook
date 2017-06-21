@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>sync-addin-for-outlook-and-jira.Tests</RootNamespace>
     <AssemblyName>sync-addin-for-outlook-and-jira.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <Name>sync-addin-for-outlook-and-jira.Tests</Name>
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
@@ -63,16 +63,24 @@
   -->
   <Import Project="..\..\.paket\paket.targets" />
   <ItemGroup>
-    <Compile Include="..\TestSecrets.fs" />
-    <Compile Include="Tests.fs" />
+    <Compile Include="..\TestSecrets.fs">
+      <Link>TestSecrets.fs</Link>
+    </Compile>
+    <Compile Include="Tests2.fs" />
     <None Include="paket.references" />
     <Content Include="App.config" />
+    <Compile Include="Tests.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
+    <ProjectReference Include="..\..\src\OutlookAddin.Func\OutlookAddin.Func.fsproj">
+      <Name>OutlookAddin.Func</Name>
+      <Project>{279efea3-2a2b-4071-8b72-d1fcd87fcbac}</Project>
+      <Private>True</Private>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\sync-addin-for-outlook-and-jira\sync-addin-for-outlook-and-jira.fsproj">
       <Name>sync-addin-for-outlook-and-jira</Name>
       <Project>{f2c5fa08-1095-4903-9539-0e1f5f0bf407}</Project>
