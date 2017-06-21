@@ -1,9 +1,24 @@
 ﻿namespace OutlookAddin.Func
 
+open System
+
+module Common = 
+    open Microsoft.ApplicationInsights
+    let tc : TelemetryClient = TelemetryClient()
+
 module UI = 
 
-    open System
     open System.Drawing
+    open System.IO
+    open Common
+
+    let yymmdd1 (date:DateTime) = date.ToString("yy.MM.dd")
+
+    do
+        tc.InstrumentationKey <- "7eff79da-c80d-4309-ba2a-69a2f128e55c"
+        tc.Context.User.Id <- Environment.UserName
+        tc.Context.Session.Id <- sprintf "%s-%s" Environment.MachineName (yymmdd1 DateTime.Now)
+        tc.Context.Device.OperatingSystem <- Environment.OSVersion.ToString()
 
     let Button_SyncNow_GetEnabled () = true
     let Button_StopSync_GetEnabled () = true
@@ -18,3 +33,13 @@ module UI =
     let Button_StopSync_Click() = ()
     let Button_Settings_Click() = ()
     let Button_Log_Click() = ()
+
+module Log = 
+    open Common
+
+    let fatal (ex:Exception) =
+        tc.TrackException(ex)
+        tc.Flush()
+    let view (ident:string) = 
+        tc.TrackPageView(ident)
+        tc.Flush()

@@ -5,13 +5,37 @@ using System.Text;
 using System.Xml.Linq;
 using Outlook = Microsoft.Office.Interop.Outlook;
 using Office = Microsoft.Office.Core;
+using OutlookAddin.Func;
 
 namespace OutlookAddIn2013
 {
     public partial class ThisAddIn
     {
+        public static ThisAddIn Instance = null;
+
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
+            Instance = this;
+
+            Log.view("ThisAddIn_Startup");
+
+            AppDomain currentDomain = AppDomain.CurrentDomain;
+            currentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledExceptionHandler);
+            currentDomain.SetData("DataDirectory",
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+        }
+
+        private void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
+        {
+            var ex = e.ExceptionObject as System.Exception;
+
+            Log.fatal(ex);
+
+            if (ex is ApplicationException)
+            {
+                var ae = (ApplicationException)ex;
+                Ribbon.Message_InternalLoadingError(ae.Message);
+            }
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)

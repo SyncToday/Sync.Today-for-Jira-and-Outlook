@@ -99,6 +99,11 @@ namespace OutlookAddIn2013
         public void Button_Settings_Click(Office.IRibbonControl control) { UI.Button_Settings_Click(); }
         public void Button_Log_Click(Office.IRibbonControl control) { UI.Button_Log_Click(); }
 
+        public static void Message_InternalLoadingError(string message)
+        {
+            System.Windows.Forms.MessageBox.Show(message, "An error occurred", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+        }
+
         #endregion
 
         #region Helpers

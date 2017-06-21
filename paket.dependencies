@@ -10,7 +10,8 @@ nuget FSharp.Core ~> 4.0.0.1 strategy: min, redirects: force
 group Build
   source https://nuget.org/api/v2
   
-nuget FSharp.Data
+  nuget FSharp.Data
+  nuget Microsoft.ApplicationInsights.WindowsServer
   nuget SourceLink.Fake
   nuget FAKE
   nuget FSharp.Formatting
