@@ -7,14 +7,15 @@ module Common =
     open Serilog
     let tc : TelemetryClient = TelemetryClient()
     let logFileName = "%TMP%\sync-addin-for-outlook-and-jira-%s.txt"
+    let logFilePatternSeriLog = sprintf (Printf.StringFormat<string->string>(logFileName)) "{Date}"
+    let logFilePatternSearch = sprintf (Printf.StringFormat<string->string>(logFileName)) "*"
     let log = 
-        LoggerConfiguration().MinimumLevel.Debug().WriteTo.RollingFile( sprintf (Printf.StringFormat<string->string>(logFileName)) "{Date}" ).CreateLogger()
+        LoggerConfiguration().MinimumLevel.Debug().WriteTo.RollingFile( logFilePatternSeriLog ).CreateLogger()
 
-module UI = 
 
-    open System.Drawing
-    open System.IO
+module Log = 
     open Common
+    open System.IO
 
     let yymmdd1 (date:DateTime) = date.ToString("yy.MM.dd")
 
@@ -23,6 +24,30 @@ module UI =
         tc.Context.User.Id <- Environment.UserName
         tc.Context.Session.Id <- sprintf "%s-%s" Environment.MachineName (yymmdd1 DateTime.Now)
         tc.Context.Device.OperatingSystem <- Environment.OSVersion.ToString()
+
+    let fatal (ex:Exception, source:string) =
+        log.Fatal(ex, sprintf "Unhandled exception in %A" source)
+        tc.TrackException(ex)
+        tc.Flush()
+    let view (ident:string) = 
+        log.Information(sprintf "Form %s opened" ident )
+        tc.TrackPageView(ident)
+        tc.Flush()
+
+    let findLatestLogFile () = 
+        let path = Path.GetFullPath( Environment.ExpandEnvironmentVariables( logFilePatternSeriLog ) )
+        let di = path |> DirectoryInfo
+        di.GetFiles( logFilePatternSearch ) 
+        |> Array.sortByDescending( fun p -> p.LastWriteTime ) 
+        |> Array.tryHead
+        |> Option.map( fun p -> p.FullName )
+
+module UI = 
+
+    open System.Drawing    
+    open Common
+    open System.Diagnostics
+    open Log
 
     let Button_SyncNow_GetEnabled () = true
     let Button_StopSync_GetEnabled () = true
@@ -35,17 +60,8 @@ module UI =
     let GetLabel_label_Version (link:DateTime) = ""
     let Button_SyncNow_Click() = ()
     let Button_StopSync_Click() = ()
-    let Button_Settings_Click() = ()
+    let Button_Settings_Click() =
+        match findLatestLogFile() with
+        | Some( s ) -> Process.Start( s ) |> ignore
+        | _ -> ()        
     let Button_Log_Click() = ()
-
-module Log = 
-    open Common
-
-    let fatal (ex:Exception, source:string) =
-        log.Fatal(ex, sprintf "Unhandled exception in %A" source)
-        tc.TrackException(ex)
-        tc.Flush()
-    let view (ident:string) = 
-        log.Information(sprintf "Form %s opened" ident )
-        tc.TrackPageView(ident)
-        tc.Flush()
