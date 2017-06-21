@@ -12,6 +12,8 @@ namespace OutlookAddIn2013
 {
     public partial class SettingsForm : Form
     {
+        public static SettingsForm Instance = null;
+
         public SettingsForm()
         {
             InitializeComponent();
@@ -21,11 +23,13 @@ namespace OutlookAddIn2013
             textBox_UserName.Text = s.UserName;
             textBox_Password.Text = s.Password;
 
+            Instance = this;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
+            Instance = null;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -36,6 +40,8 @@ namespace OutlookAddIn2013
             s.Password = textBox_Password.Text;
 
             s.Save();
+
+            button2_Click(sender, e);
         }
     }
 }

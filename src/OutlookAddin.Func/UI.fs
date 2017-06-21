@@ -49,6 +49,7 @@ module UI =
     open Common
     open System.Diagnostics
     open Log
+    open System.Windows.Forms
 
     let Button_SyncNow_GetEnabled () = true
     let Button_StopSync_GetEnabled () = true
@@ -59,10 +60,15 @@ module UI =
     let GetLabel_label_TasksState () = ""
     let GetLabel_label_State () = ""
     let GetLabel_label_Version (link:DateTime) = ""
-    let Button_SyncNow_Click() = ()
+    let Button_SyncNow_Click server userName password = 
+        view "SyncNow"
+        sync_addin_for_outlook_and_jira.Library.JIRA.downloadByAssignee server userName password |> ignore
     let Button_StopSync_Click() = ()
-    let Button_Settings_Click() = ()
+    let Button_Settings_Click(form:Form) =
+        view "Settings"
+        form.Show()
     let Button_Log_Click() = 
+        view "Log"
         match findLatestLogFile() with
         | Some( s ) -> Process.Start( s ) |> ignore
         | _ -> ()        
