@@ -192,6 +192,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
@@ -246,6 +247,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Ribbon.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1387315210_config.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1387315262_refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1387315799_showreel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1390334333_logout.png" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

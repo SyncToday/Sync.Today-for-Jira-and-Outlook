@@ -68,8 +68,8 @@ module UI =
     let GetSettingsButtonImage () : Bitmap = unbox null
     let GetLogButtonImage () : Bitmap = unbox null
     let GetLabel_label_TasksState () = ""
-    let GetLabel_label_State () = ""
-    let GetLabel_label_Version (link:DateTime) = ""
+    let GetLabel_label_State () = "Ready"
+    let GetLabel_label_Version (link:DateTime) = sprintf "v%s" (yymmdd1 link)
     let Button_SyncNow_Click server userName password  (createNewTask:OutlookTask->unit) (alreadyProcessed:string array) = 
         view "SyncNow"
         let download = sync_addin_for_outlook_and_jira.Library.JIRA.downloadByAssignee server userName password

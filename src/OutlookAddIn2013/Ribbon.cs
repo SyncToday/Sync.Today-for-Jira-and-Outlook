@@ -10,6 +10,7 @@ using OutlookAddin.Func;
 using System.Drawing;
 using sync_addin_for_outlook_and_jira;
 using Microsoft.FSharp.Core;
+using OutlookAddIn2013.Properties;
 
 namespace OutlookAddIn2013
 {
@@ -51,22 +52,22 @@ namespace OutlookAddIn2013
 
         public Bitmap GetSyncNowButtonImage(Office.IRibbonControl control)
         {
-            return UI.GetSyncNowButtonImage();
+            return Resources.Refresh;
         }
 
         public Bitmap GetStopSyncButtonImage(Office.IRibbonControl control)
         {
-            return UI.GetStopSyncButtonImage();
+            return Resources.Stop;
         }
 
         public Bitmap GetSettingsButtonImage(Office.IRibbonControl control)
         {
-            return UI.GetSettingsButtonImage();
+            return Resources.Log;
         }
 
         public Bitmap GetLogButtonImage(Office.IRibbonControl control)
         {
-            return UI.GetLogButtonImage();
+            return Resources.Log;
         }
 
         public string GetLabel_label_TasksState(Office.IRibbonControl control)
