@@ -8,18 +8,8 @@ using System.Text;
 using Office = Microsoft.Office.Core;
 using OutlookAddin.Func;
 using System.Drawing;
-
-// TODO:  Follow these steps to enable the Ribbon (XML) item:
-
-// 2. Create callback methods in the "Ribbon Callbacks" region of this class to handle user
-//    actions, such as clicking a button. Note: if you have exported this Ribbon from the Ribbon designer,
-//    move your code from the event handlers to the callback methods and modify the code to work with the
-//    Ribbon extensibility (RibbonX) programming model.
-
-// 3. Assign attributes to the control tags in the Ribbon XML file to identify the appropriate callback methods in your code.  
-
-// For more information, see the Ribbon XML documentation in the Visual Studio Tools for Office Help.
-
+using sync_addin_for_outlook_and_jira;
+using Microsoft.FSharp.Core;
 
 namespace OutlookAddIn2013
 {
@@ -96,7 +86,8 @@ namespace OutlookAddIn2013
 
         public void Button_SyncNow_Click(Office.IRibbonControl control) {
             var s = Settings.Default;
-            UI.Button_SyncNow_Click(s.ServerUrl, s.UserName, s.Password);
+            var createNewTaskFS = Microsoft.FSharp.Core.FSharpFunc<Types.Outlook.OutlookTask, Unit>.FromConverter(new Converter<Types.Outlook.OutlookTask, Unit>(ThisAddIn.createNewTask));
+            UI.Button_SyncNow_Click(s.ServerUrl, s.UserName, s.Password, createNewTaskFS);
         }
         public void Button_StopSync_Click(Office.IRibbonControl control) { UI.Button_StopSync_Click(); }
         public void Button_Settings_Click(Office.IRibbonControl control) { UI.Button_Settings_Click(new SettingsForm()); }

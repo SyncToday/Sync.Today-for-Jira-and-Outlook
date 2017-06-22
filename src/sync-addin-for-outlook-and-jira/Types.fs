@@ -10,3 +10,8 @@ module Types =
             Key : string
             Summary : string
         }
+
+    module Outlook =
+        type OutlookTask = {
+            Subject : string
+        }

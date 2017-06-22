@@ -56,6 +56,7 @@ module UI =
     open Log
     open System.Windows.Forms
     open sync_addin_for_outlook_and_jira.Library.Common
+    open sync_addin_for_outlook_and_jira.Types.Outlook
 
     let Button_SyncNow_GetEnabled () = true
     let Button_StopSync_GetEnabled () = true
@@ -66,7 +67,7 @@ module UI =
     let GetLabel_label_TasksState () = ""
     let GetLabel_label_State () = ""
     let GetLabel_label_Version (link:DateTime) = ""
-    let Button_SyncNow_Click server userName password = 
+    let Button_SyncNow_Click server userName password  (createNewTask:OutlookTask->unit) = 
         view "SyncNow"
         let download = sync_addin_for_outlook_and_jira.Library.JIRA.downloadByAssignee server userName password
         match download with
