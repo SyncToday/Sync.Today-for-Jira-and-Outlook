@@ -9,6 +9,7 @@ using OutlookAddin.Func;
 using Microsoft.FSharp.Core;
 using sync_addin_for_outlook_and_jira;
 using System.Runtime.InteropServices;
+using System.Configuration;
 
 namespace OutlookAddIn2013
 {
@@ -33,6 +34,9 @@ namespace OutlookAddIn2013
             currentDomain.SetData("DataDirectory",
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
 
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+            Log.usingConfigFrom(config.FilePath);      
+            
             stor.application = this.Application;
             var ns = stor.application.Session;
             var tasksFolder = ns.GetDefaultFolder(Outlook.OlDefaultFolders.olFolderTasks);
@@ -66,6 +70,12 @@ namespace OutlookAddIn2013
             myItem.Save();
 
             Marshal.ReleaseComObject(myItem);
+
+            var s = Settings.Default;
+            var keys = new List<string>(s.KeysProcessed ?? (new string[] { }));
+            keys.Add(muster.Key);
+            s.KeysProcessed = keys.ToArray();
+            s.Save();
 
             return (Unit)Activator.CreateInstance(typeof(Unit), true);
         }

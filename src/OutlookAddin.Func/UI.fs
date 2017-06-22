@@ -36,6 +36,9 @@ module Log =
         tc.TrackPageView(ident)
         tc.Flush()
 
+    let usingConfigFrom (path:string) =
+        log.Information(sprintf "Application reading config from %A" path )        
+
     let applicationError (source:string) (message:string) (ex:Exception) =
         fatal source ex
         System.Windows.Forms.MessageBox.Show(message, "An error occurred", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error) |> ignore
@@ -67,11 +70,14 @@ module UI =
     let GetLabel_label_TasksState () = ""
     let GetLabel_label_State () = ""
     let GetLabel_label_Version (link:DateTime) = ""
-    let Button_SyncNow_Click server userName password  (createNewTask:OutlookTask->unit) = 
+    let Button_SyncNow_Click server userName password  (createNewTask:OutlookTask->unit) (alreadyProcessed:string array) = 
         view "SyncNow"
         let download = sync_addin_for_outlook_and_jira.Library.JIRA.downloadByAssignee server userName password
         match download with
-        | Success(issues) -> ()
+        | Success(issues) -> 
+            issues 
+            |> Array.where( fun p -> alreadyProcessed |> Array.exists( fun a -> a = p.Key ) |> not )
+            |> Array.iter( fun i ->  createNewTask { Key = i.Key; Subject= sprintf "#%s %s" i.Key i.Summary } )
         | Failure(ex) -> ex |> applicationError "downloadByAssignee" "Download from JIRA failed."
 
     let Button_StopSync_Click() = ()

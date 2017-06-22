@@ -87,7 +87,7 @@ namespace OutlookAddIn2013
         public void Button_SyncNow_Click(Office.IRibbonControl control) {
             var s = Settings.Default;
             var createNewTaskFS = Microsoft.FSharp.Core.FSharpFunc<Types.Outlook.OutlookTask, Unit>.FromConverter(new Converter<Types.Outlook.OutlookTask, Unit>(ThisAddIn.createNewTask));
-            UI.Button_SyncNow_Click(s.ServerUrl, s.UserName, s.Password, createNewTaskFS);
+            UI.Button_SyncNow_Click(s.ServerUrl, s.UserName, s.Password, createNewTaskFS, s.KeysProcessed??(new string[] { }) );
         }
         public void Button_StopSync_Click(Office.IRibbonControl control) { UI.Button_StopSync_Click(); }
         public void Button_Settings_Click(Office.IRibbonControl control) { UI.Button_Settings_Click(new SettingsForm()); }

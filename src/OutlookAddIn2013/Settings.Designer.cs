@@ -58,5 +58,17 @@ namespace OutlookAddIn2013 {
                 this["Password"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string[] KeysProcessed {
+            get {
+                return ((string[])(this["KeysProcessed"]));
+            }
+            set {
+                this["KeysProcessed"] = value;
+            }
+        }
     }
 }

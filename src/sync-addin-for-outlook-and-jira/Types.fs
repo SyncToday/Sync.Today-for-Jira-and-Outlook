@@ -13,5 +13,6 @@ module Types =
 
     module Outlook =
         type OutlookTask = {
+            Key : string
             Subject : string
         }
