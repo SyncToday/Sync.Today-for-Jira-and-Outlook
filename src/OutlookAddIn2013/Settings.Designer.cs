@@ -70,5 +70,17 @@ namespace OutlookAddIn2013 {
                 this["KeysProcessed"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string[] IdsCreated {
+            get {
+                return ((string[])(this["IdsCreated"]));
+            }
+            set {
+                this["IdsCreated"] = value;
+            }
+        }        
     }
 }

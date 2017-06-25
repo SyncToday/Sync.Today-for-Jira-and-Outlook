@@ -70,14 +70,22 @@ module UI =
     let GetLabel_label_TasksState () = ""
     let GetLabel_label_State () = "Ready"
     let GetLabel_label_Version (link:DateTime) = sprintf "v%s" (yymmdd1 link)
-    let Button_SyncNow_Click server userName password  (createNewTask:OutlookTask->unit) (alreadyProcessed:string array) = 
+    let Button_SyncNow_Click server userName password  (createNewTask:OutlookTask->unit) (updateExistingTask:OutlookTask->unit) (alreadyProcessed:string array) = 
         view "SyncNow"
         let download = sync_addin_for_outlook_and_jira.Library.JIRA.downloadByAssignee server userName password
         match download with
         | Success(issues) -> 
+
+            // create new issues
             issues 
             |> Array.where( fun p -> alreadyProcessed |> Array.exists( fun a -> a = p.Key ) |> not )
             |> Array.iter( fun i ->  createNewTask { Key = i.Key; Subject= sprintf "#%s %s" i.Key i.Summary } )
+
+            // modify already created
+            issues 
+            |> Array.where( fun p -> alreadyProcessed |> Array.exists( fun a -> a = p.Key ) )
+            |> Array.iter( fun i ->  updateExistingTask { Key = i.Key; Subject= sprintf "#%s %s" i.Key i.Summary } )
+
         | Failure(ex) -> ex |> applicationError "downloadByAssignee" "Download from JIRA failed."
 
     let Button_StopSync_Click() = ()
