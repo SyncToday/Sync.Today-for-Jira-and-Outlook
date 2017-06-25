@@ -72,7 +72,6 @@
             // 
             // textBox_Password
             // 
-            this.textBox_Password.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBox_Password.Location = new System.Drawing.Point(82, 84);
             this.textBox_Password.Name = "textBox_Password";
             this.textBox_Password.PasswordChar = '*';

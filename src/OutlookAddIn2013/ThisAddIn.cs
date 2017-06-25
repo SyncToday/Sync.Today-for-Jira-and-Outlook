@@ -101,7 +101,7 @@ namespace OutlookAddIn2013
 
             var ns = stor.application.Session;
             var entryID = keysAndIds[ corresponding.Key ] as string;
-            var myItem = ns.GetItemFromID(entryID) as Outlook.AppointmentItem;
+            var myItem = ns.GetItemFromID(entryID) as Outlook.TaskItem;
 
             myItem.Subject = corresponding.Subject;
             myItem.Save();
