@@ -23,7 +23,12 @@ module Library =
         let downloadByAssignee (server:string) (userName:string) (password:string) = 
             try
                 let convert (root:Issues.Root) : Issue [] = 
-                    root.Issues |> Array.map( fun p -> { Key = p.Key; Summary = p.Fields.Summary } ) 
+                    root.Issues 
+                    |> Array.map( 
+                        fun p -> 
+                            { Key = p.Key; Summary = p.Fields.Summary;
+                              Resolved = p.Fields.Resolution.IsSome } 
+                    ) 
 
                 Http.RequestString( 
                     ( sprintf "%s/rest/api/2/search?jql=assignee=%s" server userName), httpMethod = HttpMethod.Get,

@@ -79,12 +79,12 @@ module UI =
             // create new issues
             issues 
             |> Array.where( fun p -> alreadyProcessed |> Array.exists( fun a -> a = p.Key ) |> not )
-            |> Array.iter( fun i ->  createNewTask { Key = i.Key; Subject= sprintf "#%s %s" i.Key i.Summary } )
+            |> Array.iter( fun i ->  createNewTask { Key = i.Key; Subject= sprintf "#%s %s" i.Key i.Summary; Completed = i.Resolved } )
 
             // modify already created
             issues 
             |> Array.where( fun p -> alreadyProcessed |> Array.exists( fun a -> a = p.Key ) )
-            |> Array.iter( fun i ->  updateExistingTask { Key = i.Key; Subject= sprintf "#%s %s" i.Key i.Summary } )
+            |> Array.iter( fun i ->  updateExistingTask { Key = i.Key; Subject= sprintf "#%s %s" i.Key i.Summary; Completed = i.Resolved } )
 
         | Failure(ex) -> ex |> applicationError "downloadByAssignee" "Download from JIRA failed."
 

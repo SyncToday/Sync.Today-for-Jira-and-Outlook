@@ -9,10 +9,12 @@ module Types =
         type Issue = {
             Key : string
             Summary : string
+            Resolved : bool
         }
 
     module Outlook =
         type OutlookTask = {
             Key : string
             Subject : string
+            Completed : bool
         }
