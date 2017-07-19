@@ -36,6 +36,9 @@ module Log =
         tc.TrackPageView(ident)
         tc.Flush()
 
+    let info (message:string) = 
+        log.Information (message)
+
     let usingConfigFrom (path:string) =
         log.Information(sprintf "Application reading config from %A" path )        
 

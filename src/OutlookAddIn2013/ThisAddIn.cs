@@ -43,6 +43,15 @@ namespace OutlookAddIn2013
             var tasksFolder = ns.GetDefaultFolder(Outlook.OlDefaultFolders.olFolderTasks);
 
             stor.tasks = tasksFolder.Items;
+
+            var now = DateTime.UtcNow;
+            var build = Functions.RetrieveLinkerTimestamp();            
+            if ( now - build > TimeSpan.FromDays(6*30) )
+            {
+                var msg = "This version was not expected to run so long. Please upgrade by running setup.exe from https://github.com/hsharpsoftware/publish/raw/master/sync-addin-for-outlook-and-jira/ (this was written to the log too).";
+                Log.info( msg );
+                System.Windows.Forms.MessageBox.Show(msg);
+            }
         }
 
         private void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
