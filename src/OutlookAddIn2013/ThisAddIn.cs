@@ -113,6 +113,7 @@ namespace OutlookAddIn2013
             var myItem = ns.GetItemFromID(entryID) as Outlook.TaskItem;
 
             myItem.Subject = corresponding.Subject;
+            myItem.Complete = corresponding.Completed;
             myItem.Save();
 
             Marshal.ReleaseComObject(myItem);
