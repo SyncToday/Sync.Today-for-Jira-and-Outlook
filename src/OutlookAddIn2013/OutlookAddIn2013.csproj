@@ -34,7 +34,7 @@
     <PublishUrl>D:\S\publish.hsharp.software\sync-addin-for-outlook-and-jira\</PublishUrl>
     <InstallUrl>https://github.com/hsharpsoftware/publish/raw/master/sync-addin-for-outlook-and-jira/</InstallUrl>
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>1.0.0.2</ApplicationVersion>
+    <ApplicationVersion>1.0.0.3</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>7</UpdateInterval>
