@@ -107,3 +107,7 @@ module UI =
         match download with
         | Success(issues) -> ()
         | Failure(ex) -> ex |> applicationError "Connection Test" "Connection to JIRA server failed. Check the connection parameters and try again."
+
+    let Open_JIRA (server:string) (taskSubject:string) =
+        let key = taskSubject.TrimStart('#').Split(' ').[0]
+        System.Diagnostics.Process.Start( sprintf "%s/browse/%s" server key )

@@ -3,7 +3,7 @@
   <ribbon>
     <tabs>
       <tab id="TabUniversalSync" label="JIRA">
-        <group id="group_SyncControl" label="Controls">
+        <group id="group_SyncControl" label="General Controls">
           <button id="button_SyncNow" onAction="Button_SyncNow_Click" label="Download" size="large" getEnabled="Button_SyncNow_GetEnabled" getImage="GetSyncNowButtonImage" />
           <button id="button_StopSync" onAction="Button_StopSync_Click" label="Stop" size="large" getEnabled="Button_StopSync_GetEnabled" getImage="GetStopSyncButtonImage"/>
           <button id="button_Settings" onAction="Button_Settings_Click" label="Settings..." size="large"  getImage="GetSettingsButtonImage"/>
@@ -18,6 +18,9 @@
           <labelControl id="label_Version" getLabel="GetLabel_label_Version" />
           <labelControl id="label_Warning" getLabel="GetLabel_label_Warning" />
         </group>
+          <group id="group_JIRA" label="JIRA">
+              <button id="button_Open" onAction="Button_Open_Click" label="Open in JIRA..." size="large" getEnabled="Button_Open_GetEnabled" getImage="GetOpenButtonImage" />
+          </group>
       </tab>
 
     </tabs>

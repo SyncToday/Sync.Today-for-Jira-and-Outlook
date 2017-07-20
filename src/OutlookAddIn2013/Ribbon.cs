@@ -32,6 +32,29 @@ namespace OutlookAddIn2013
 
         #endregion
 
+        private object selectedItem
+        {
+            get
+            {
+                var selection = stor.application.ActiveExplorer().Selection;
+                return selection.Count == 0 ? null : selection[1];
+            }
+        }
+
+        private Microsoft.Office.Interop.Outlook.TaskItem selectedTask
+        {
+            get
+            {
+                var item = selectedItem;
+                var task = item as Microsoft.Office.Interop.Outlook.TaskItem;
+                if (task != null && task.Subject.StartsWith("#"))
+                {
+                    return task;
+                }
+                return null;
+            }
+        }
+
         #region Ribbon Callbacks
         //Create callback methods here. For more information about adding callback methods, visit http://go.microsoft.com/fwlink/?LinkID=271226
 
@@ -100,6 +123,24 @@ namespace OutlookAddIn2013
             System.Windows.Forms.MessageBox.Show(message, "An error occurred", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
         }
 
+        public void Button_Open_Click(Office.IRibbonControl control)
+        {
+            var s = Settings.Default;
+            var task = selectedTask;
+            if (task == null) return;
+            UI.Open_JIRA(s.ServerUrl, task.Subject);
+        }
+
+        public bool Button_Open_GetEnabled(Office.IRibbonControl control)
+        {
+            return selectedTask != null;
+        }
+
+        public Bitmap GetOpenButtonImage(Office.IRibbonControl control)
+        {
+            return Resources.Open;
+        }
+        
         #endregion
 
         #region Helpers
