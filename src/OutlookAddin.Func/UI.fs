@@ -100,3 +100,10 @@ module UI =
         match findLatestLogFile() with
         | Some( s ) -> Process.Start( s ) |> ignore
         | _ -> ()        
+
+    let Button_Test_Click server userName password  = 
+        view "Test"
+        let download = sync_addin_for_outlook_and_jira.Library.JIRA.downloadByAssignee server userName password
+        match download with
+        | Success(issues) -> ()
+        | Failure(ex) -> ex |> applicationError "Connection Test" "Connection to JIRA server failed. Check the connection parameters and try again."
