@@ -11,6 +11,7 @@ using sync_addin_for_outlook_and_jira;
 using System.Runtime.InteropServices;
 using System.Configuration;
 using System.Collections;
+using System.Threading;
 
 namespace OutlookAddIn2013
 {
@@ -65,7 +66,8 @@ namespace OutlookAddIn2013
 
             stor.tasks = tasksFolder.Items;
 
-            fixLocalIdStore();
+            var oThread = new Thread(new ThreadStart(fixLocalIdStore));
+            oThread.Start();
 
             var now = DateTime.UtcNow;
             var build = Functions.RetrieveLinkerTimestamp();            
