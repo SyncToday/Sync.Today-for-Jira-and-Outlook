@@ -24,6 +24,27 @@ namespace OutlookAddIn2013
     {
         public static ThisAddIn Instance = null;
 
+        private void fixLocalIdStore() {
+            var s = Settings.Default;
+            var keys = new List<string>(s.KeysProcessed ?? (new string[] { }));
+            var ids = new List<string>(s.IdsCreated ?? (new string[] { }));
+
+            foreach( var item in stor.tasks ) {
+                var task = item as Outlook.TaskItem;
+                if ( task == null ) continue;
+                var subject = task.Subject;
+                if (subject.StartsWith("#")) {
+                    var key = UI.getKeyFromTaskSubject(subject);
+                    keys.Add(key);
+                    ids.Add(task.EntryID);
+                }
+            }
+
+            s.KeysProcessed = keys.ToArray();
+            s.IdsCreated = ids.ToArray();
+            s.Save();
+        }
+
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             Instance = this;
@@ -43,6 +64,8 @@ namespace OutlookAddIn2013
             var tasksFolder = ns.GetDefaultFolder(Outlook.OlDefaultFolders.olFolderTasks);
 
             stor.tasks = tasksFolder.Items;
+
+            fixLocalIdStore();
 
             var now = DateTime.UtcNow;
             var build = Functions.RetrieveLinkerTimestamp();            

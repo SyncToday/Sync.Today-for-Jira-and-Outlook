@@ -110,9 +110,12 @@ module UI =
         view "Test"
         let download = sync_addin_for_outlook_and_jira.Library.JIRA.downloadByAssignee server userName password
         match download with
-        | Success(issues) -> ()
+        | Success(issues) -> System.Windows.Forms.MessageBox.Show("Connection Succeeded", "Connection Succeeded", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information) |> ignore
         | Failure(ex) -> ex |> applicationError "Connection Test" "Connection to JIRA server failed. Check the connection parameters and try again."
 
+    let getKeyFromTaskSubject (s:string) : string = 
+        s.TrimStart('#').Split(' ').[0]
+
     let Open_JIRA (server:string) (taskSubject:string) =
-        let key = taskSubject.TrimStart('#').Split(' ').[0]
+        let key = taskSubject |> getKeyFromTaskSubject
         System.Diagnostics.Process.Start( sprintf "%s/browse/%s" server key )
