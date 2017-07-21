@@ -78,6 +78,7 @@ namespace OutlookAddIn2013
             var idItemCreated = String.Empty;
             var myItem = stor.application.CreateItem(Microsoft.Office.Interop.Outlook.OlItemType.olTaskItem) as Outlook.TaskItem;
             myItem.Subject = muster.Subject;
+            myItem.Complete = muster.Completed;
             myItem.Save();
 
             idItemCreated = myItem.EntryID;
