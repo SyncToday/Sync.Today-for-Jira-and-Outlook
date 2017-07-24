@@ -81,18 +81,27 @@ module UI =
         view "SyncNow"
         let download = sync_addin_for_outlook_and_jira.Library.JIRA.downloadByAssignee server userName password
         let getSubject = taskSubjectFromIssue server
+
+        let getBody (i:sync_addin_for_outlook_and_jira.Types.JIRA.Issue) : string =
+            if String.IsNullOrWhiteSpace(i.Description) then "" else i.Description + Environment.NewLine + "======================================================================" + Environment.NewLine
+            + String.Join( 
+                Environment.NewLine, i.Comments 
+                |> Array.map( fun x -> 
+                                x.Author + " " + x.Created.ToLongTimeString() + ":" + Environment.NewLine + x.Body + Environment.NewLine + "--------------------------------------------------------" ) 
+              )
+
         match download with
         | Success(issues) -> 
 
             // create new issues
             issues 
             |> Array.where( fun p -> alreadyProcessed |> Array.exists( fun a -> a = p.Key ) |> not )
-            |> Array.iter( fun i ->  createNewTask { Key = i.Key; Subject= i |> getSubject; Completed = i.Resolved; Body = i.Description } )
+            |> Array.iter( fun i ->  createNewTask { Key = i.Key; Subject= i |> getSubject; Completed = i.Resolved; Body = i |> getBody } )
 
             // modify already created
             issues 
             |> Array.where( fun p -> alreadyProcessed |> Array.exists( fun a -> a = p.Key ) )
-            |> Array.iter( fun i ->  updateExistingTask { Key = i.Key; Subject= i |> getSubject; Completed = i.Resolved; Body = i.Description } )
+            |> Array.iter( fun i ->  updateExistingTask { Key = i.Key; Subject= i |> getSubject; Completed = i.Resolved; Body = i |> getBody } )
 
         | Failure(ex) -> ex |> applicationError "downloadByAssignee" "Download from JIRA failed."
 

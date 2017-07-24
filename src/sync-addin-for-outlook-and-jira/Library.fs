@@ -23,7 +23,11 @@ module Library =
         let downloadByAssignee (server:string) (userName:string) (password:string) = 
             try
                 let convert (root:Issues.Root) : Issue [] = 
-                    let comments (p)  : Comment array = Array.empty
+                    let comments (p:Issues.Issue)  : Comment array = 
+                        p.Fields.Comment.Comments 
+                        |> Array.map( fun x -> { Id = x.Id; Author = x.Author.Name; Body = x.Body; Created = x.Created } ) 
+                        |> Array.sortByDescending( fun x -> x.Id )
+
                     root.Issues 
                     |> Array.map( 
                         fun p -> 

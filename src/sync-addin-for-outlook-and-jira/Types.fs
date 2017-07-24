@@ -1,6 +1,7 @@
 namespace sync_addin_for_outlook_and_jira
 
 open FSharp.Data
+open System
 
 module Types = 
     module JIRA =
@@ -10,6 +11,7 @@ module Types =
             Id : int
             Author : string
             Body : string
+            Created : DateTime
         }
 
         type Issue = {
