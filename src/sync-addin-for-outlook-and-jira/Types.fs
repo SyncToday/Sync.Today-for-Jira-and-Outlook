@@ -10,6 +10,7 @@ module Types =
             Key : string
             Summary : string
             Resolved : bool
+            Description : string
         }
 
     module Outlook =
@@ -17,4 +18,5 @@ module Types =
             Key : string
             Subject : string
             Completed : bool
+            Body : string
         }

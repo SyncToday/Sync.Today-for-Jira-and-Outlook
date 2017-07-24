@@ -27,7 +27,12 @@ module Library =
                     |> Array.map( 
                         fun p -> 
                             { Key = p.Key; Summary = p.Fields.Summary;
-                              Resolved = p.Fields.Resolution.IsSome } 
+                              Resolved = p.Fields.Resolution.IsSome; 
+                              Description = 
+                                match p.Fields.Description  with
+                                | Some(x) -> x
+                                | _ -> System.String.Empty
+                              } 
                     ) 
 
                 Http.RequestString( 

@@ -104,6 +104,7 @@ namespace OutlookAddIn2013
             var myItem = stor.application.CreateItem(Microsoft.Office.Interop.Outlook.OlItemType.olTaskItem) as Outlook.TaskItem;
             myItem.Subject = muster.Subject;
             myItem.Complete = muster.Completed;
+            myItem.Body = muster.Body;
             myItem.Save();
 
             idItemCreated = myItem.EntryID;
@@ -140,6 +141,7 @@ namespace OutlookAddIn2013
 
             myItem.Subject = corresponding.Subject;
             myItem.Complete = corresponding.Completed;
+            myItem.Body = corresponding.Body;
             myItem.Save();
 
             Marshal.ReleaseComObject(myItem);
