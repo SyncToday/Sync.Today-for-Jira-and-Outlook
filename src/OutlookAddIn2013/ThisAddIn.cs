@@ -178,7 +178,10 @@ namespace OutlookAddIn2013
 
             var keysAndIds = new Hashtable();            
             for ( var i = 0; i < s._KeysProcessed.Length; i++ ) {
-                keysAndIds.Add( s._KeysProcessed[i], s._IdsCreated[i] );
+                var key = s._KeysProcessed[i];
+                if (keysAndIds.ContainsKey(key)) continue;
+
+                keysAndIds.Add( key, s._IdsCreated[i] );
             }
 
             var ns = stor.application.Session;
