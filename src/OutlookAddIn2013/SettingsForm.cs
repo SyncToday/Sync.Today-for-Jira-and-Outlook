@@ -33,6 +33,9 @@ namespace OutlookAddIn2013
             textBox_UserName.Text = s.UserName;
             textBox_Password.Text = s.Password;
 
+            checkBox_AutosyncAllowed.Checked = s.TimerEnabled;
+            textBox_TimeElapse.Text = String.Empty + s.TimerInterval;
+
             Instance = this;
         }
 
