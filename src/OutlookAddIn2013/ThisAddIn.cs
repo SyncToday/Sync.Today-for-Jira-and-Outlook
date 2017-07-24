@@ -169,13 +169,16 @@ namespace OutlookAddIn2013
         internal static Unit updateExistingTask(Types.Outlook.OutlookTask corresponding)
         {
             var s = Settings.Default;
-            if ( s.KeysProcessed == null  ) throw new ArgumentNullException( "KeysProcessed" );
-            if ( s.IdsCreated == null  ) throw new ArgumentNullException( "IdsCreated" );
-            if ( s.KeysProcessed.Length != s.IdsCreated.Length  ) throw new ArgumentOutOfRangeException ( "KeysProcessed.Length != IdsCreated.Length" );
+            if ( s._KeysProcessed == null  ) throw new ArgumentNullException( "KeysProcessed" );
+            if ( s._IdsCreated == null  ) throw new ArgumentNullException( "IdsCreated" );
+            if ( s._KeysProcessed.Length != s._IdsCreated.Length  )
+                throw new ArgumentOutOfRangeException ( 
+                    String.Format("KeysProcessed.Length ({0}) != IdsCreated.Length ({1})", s._KeysProcessed.Length, s._IdsCreated.Length )
+                );
 
             var keysAndIds = new Hashtable();            
-            for ( var i = 0; i < s.KeysProcessed.Length; i++ ) {
-                keysAndIds.Add( s.KeysProcessed[i], s.IdsCreated[i] );
+            for ( var i = 0; i < s._KeysProcessed.Length; i++ ) {
+                keysAndIds.Add( s._KeysProcessed[i], s._IdsCreated[i] );
             }
 
             var ns = stor.application.Session;
