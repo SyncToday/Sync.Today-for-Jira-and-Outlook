@@ -34,7 +34,7 @@
     <PublishUrl>D:\S\publish.hsharp.software\sync-addin-for-outlook-and-jira\</PublishUrl>
     <InstallUrl>https://github.com/hsharpsoftware/publish/raw/master/sync-addin-for-outlook-and-jira/</InstallUrl>
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>1.0.0.5</ApplicationVersion>
+    <ApplicationVersion>1.0.0.6</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>7</UpdateInterval>
@@ -271,8 +271,7 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>
-    </ManifestKeyFile>
+    <ManifestKeyFile>OutlookAddIn2013_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>3B6C47190E20466C4D6C2A87C8480223E4A60BC1</ManifestCertificateThumbprint>

@@ -65,11 +65,6 @@ namespace OutlookAddIn2013
             button2_Click(sender, e);
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            OutlookAddin.Func.UI.Button_Test_Click(textBox_Server.Text, textBox_UserName.Text, textBox_Password.Text);
-        }
-
         private void Message_TimeElapseNotValid()
         {
             MessageBox.Show("Please enter number of minutes", "Wrong number", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -83,6 +78,11 @@ namespace OutlookAddIn2013
                 Message_TimeElapseNotValid();
                 e.Cancel = true;
             }
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            OutlookAddin.Func.UI.Button_Test_Click(textBox_Server.Text, textBox_UserName.Text, textBox_Password.Text);
         }
     }
 }
