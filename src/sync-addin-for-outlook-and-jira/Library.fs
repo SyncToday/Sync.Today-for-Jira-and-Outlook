@@ -23,6 +23,7 @@ module Library =
         let downloadByAssignee (server:string) (userName:string) (password:string) = 
             try
                 let convert (root:Issues.Root) : Issue [] = 
+                    let comments (p)  : Comment array = Array.empty
                     root.Issues 
                     |> Array.map( 
                         fun p -> 
@@ -32,7 +33,8 @@ module Library =
                                 match p.Fields.Description  with
                                 | Some(x) -> x
                                 | _ -> System.String.Empty
-                              } 
+                              Comments = p |> comments 
+                             }
                     ) 
 
                 Http.RequestString( 
