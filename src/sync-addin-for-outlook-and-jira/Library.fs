@@ -26,7 +26,7 @@ module Library =
                     root.Issues 
                     |> Array.map( 
                         fun p -> 
-                            { Key = p.Key; Summary = p.Fields.Summary;
+                            { Key = p.Key; Summary =  p.Fields.Summary;
                               Resolved = p.Fields.Resolution.IsSome; 
                               Description = 
                                 match p.Fields.Description  with
@@ -36,7 +36,7 @@ module Library =
                     ) 
 
                 Http.RequestString( 
-                    ( sprintf "%s/rest/api/2/search?jql=assignee=%s" server userName), httpMethod = HttpMethod.Get,
+                    ( sprintf "%s/rest/api/2/search?jql=assignee=%s&fields=comment,summary,resolution,description" server userName), httpMethod = HttpMethod.Get,
                     headers = [ HttpRequestHeaders.Accept("application/json"); HttpRequestHeaders.ContentType("application/json");  
                         ( HttpRequestHeaders.BasicAuth userName password )
                     ]
