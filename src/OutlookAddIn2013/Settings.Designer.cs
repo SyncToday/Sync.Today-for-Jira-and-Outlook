@@ -62,25 +62,60 @@ namespace OutlookAddIn2013 {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string[] KeysProcessed {
+        public string KeysProcessed {
             get {
-                return ((string[])(this["KeysProcessed"]));
+                return ((string)(this["KeysProcessed"]));
             }
             set {
                 this["KeysProcessed"] = value;
             }
         }
-
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TimerInterval {
+            get {
+                return ((int)(this["TimerInterval"]));
+            }
+            set {
+                this["TimerInterval"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool TimerEnabled {
+            get {
+                return ((bool)(this["TimerEnabled"]));
+            }
+            set {
+                this["TimerEnabled"] = value;
+            }
+        }
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string[] IdsCreated {
+        public string IdsCreated {
             get {
-                return ((string[])(this["IdsCreated"]));
+                return ((string)(this["IdsCreated"]));
             }
             set {
                 this["IdsCreated"] = value;
             }
-        }        
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime LastSynchronizationEnd {
+            get {
+                return ((global::System.DateTime)(this["LastSynchronizationEnd"]));
+            }
+            set {
+                this["LastSynchronizationEnd"] = value;
+            }
+        }
     }
 }

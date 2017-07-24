@@ -49,7 +49,15 @@ namespace OutlookAddIn2013
             s.UserName = textBox_UserName.Text;
             s.Password = textBox_Password.Text;
 
+            s.TimerEnabled = checkBox_AutosyncAllowed.Checked;
+
+            int val = 0;
+            Int32.TryParse(this.textBox_TimeElapse.Text, out val);
+            s.TimerInterval = val;
+
             s.Save();
+
+            if (s.TimerEnabled) Globals.ThisAddIn.StartAutomaticSync();
 
             button2_Click(sender, e);
         }
@@ -57,6 +65,21 @@ namespace OutlookAddIn2013
         private void button3_Click(object sender, EventArgs e)
         {
             OutlookAddin.Func.UI.Button_Test_Click(textBox_Server.Text, textBox_UserName.Text, textBox_Password.Text);
+        }
+
+        private void Message_TimeElapseNotValid()
+        {
+            MessageBox.Show("Please enter number of minutes", "Wrong number", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void textBox_TimeElapse_Validating(object sender, CancelEventArgs e)
+        {
+            int i = 0;
+            if (!Int32.TryParse(textBox_TimeElapse.Text, out i) || i <= 0)
+            {
+                Message_TimeElapseNotValid();
+                e.Cancel = true;
+            }
         }
     }
 }

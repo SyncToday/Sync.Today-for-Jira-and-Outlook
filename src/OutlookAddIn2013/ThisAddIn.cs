@@ -25,10 +25,15 @@ namespace OutlookAddIn2013
     {
         public static ThisAddIn Instance = null;
 
+        public bool IsAutomaticThreadRunning { get; set; }
+        private Thread MainThread { get; set; }
+
+        public Ribbon Ribbon { get; set; }
+
         private void fixLocalIdStore() {
             var s = Settings.Default;
-            var keys = new List<string>(s.KeysProcessed ?? (new string[] { }));
-            var ids = new List<string>(s.IdsCreated ?? (new string[] { }));
+            var keys = new List<string>(s._KeysProcessed ?? (new string[] { }));
+            var ids = new List<string>(s._IdsCreated ?? (new string[] { }));
 
             foreach( var item in stor.tasks ) {
                 var task = item as Outlook.TaskItem;
@@ -41,9 +46,43 @@ namespace OutlookAddIn2013
                 }
             }
 
-            s.KeysProcessed = keys.ToArray();
-            s.IdsCreated = ids.ToArray();
+            s._KeysProcessed = keys.ToArray();
+            s._IdsCreated = ids.ToArray();
             s.Save();
+        }
+
+        public void StopAutomaticSync()
+        {
+            IsAutomaticThreadRunning = false;
+            try { if (MainThread != null) MainThread.Abort(); }
+            catch (System.Exception) { }
+        }
+
+        public void StartAutomaticSync()
+        {
+            StopAutomaticSync();
+
+            IsAutomaticThreadRunning = true;
+
+            var s = Settings.Default;
+
+            MainThread = new Thread(delegate ()
+            {
+
+                while (true)
+                {
+                    if (!Ribbon.IsThreadRunning && DateTime.Now > s.LastSynchronizationEnd.AddMinutes(s.TimerInterval))
+                    {
+                        //start
+                        Globals.ThisAddIn.Ribbon.Button_SyncNow_Click(null);
+                    }
+
+                    Globals.ThisAddIn.Ribbon.InvalidateRibbon();
+                    Thread.Sleep(30000);
+                }
+            });
+
+            MainThread.Start();
         }
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
@@ -68,6 +107,9 @@ namespace OutlookAddIn2013
 
             var oThread = new Thread(new ThreadStart(fixLocalIdStore));
             oThread.Start();
+
+            var s = Settings.Default;
+            if (s.TimerEnabled) StartAutomaticSync();
 
             var now = DateTime.UtcNow;
             var build = Functions.RetrieveLinkerTimestamp();            
@@ -95,7 +137,8 @@ namespace OutlookAddIn2013
 
         protected override Microsoft.Office.Core.IRibbonExtensibility CreateRibbonExtensibilityObject()
         {
-            return new Ribbon();
+            this.Ribbon = new Ribbon();
+            return this.Ribbon;
         }
 
         internal static Unit createNewTask(Types.Outlook.OutlookTask muster)
@@ -112,12 +155,12 @@ namespace OutlookAddIn2013
             Marshal.ReleaseComObject(myItem);
 
             var s = Settings.Default;
-            var keys = new List<string>(s.KeysProcessed ?? (new string[] { }));
-            var ids = new List<string>(s.IdsCreated ?? (new string[] { }));
+            var keys = new List<string>(s._KeysProcessed ?? (new string[] { }));
+            var ids = new List<string>(s._IdsCreated ?? (new string[] { }));
             keys.Add(muster.Key);
             ids.Add(idItemCreated);
-            s.KeysProcessed = keys.ToArray();
-            s.IdsCreated = ids.ToArray();
+            s._KeysProcessed = keys.ToArray();
+            s._IdsCreated = ids.ToArray();
             s.Save();
 
             return (Unit)Activator.CreateInstance(typeof(Unit), true);

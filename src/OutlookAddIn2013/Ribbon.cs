@@ -17,6 +17,8 @@ namespace OutlookAddIn2013
     [ComVisible(true)]
     public class Ribbon : Office.IRibbonExtensibility
     {
+        public static bool IsThreadRunning { get; private set; }
+
         private Office.IRibbonUI ribbon;
 
         public Ribbon()
@@ -112,7 +114,9 @@ namespace OutlookAddIn2013
             var s = Settings.Default;
             var createNewTaskFS = Microsoft.FSharp.Core.FSharpFunc<Types.Outlook.OutlookTask, Unit>.FromConverter(new Converter<Types.Outlook.OutlookTask, Unit>(ThisAddIn.createNewTask));
             var updateExistingTaskFS = Microsoft.FSharp.Core.FSharpFunc<Types.Outlook.OutlookTask, Unit>.FromConverter(new Converter<Types.Outlook.OutlookTask, Unit>(ThisAddIn.updateExistingTask));
-            UI.Button_SyncNow_Click(s.ServerUrl, s.UserName, s.Password, createNewTaskFS, updateExistingTaskFS, s.KeysProcessed??(new string[] { }) );
+            UI.Button_SyncNow_Click(s.ServerUrl, s.UserName, s.Password, createNewTaskFS, updateExistingTaskFS, s._KeysProcessed??(new string[] { }) );
+            s.LastSynchronizationEnd = DateTime.Now;
+            s.Save();
         }
         public void Button_StopSync_Click(Office.IRibbonControl control) { UI.Button_StopSync_Click(); }
         public void Button_Settings_Click(Office.IRibbonControl control) { UI.Button_Settings_Click(new SettingsForm()); }
@@ -166,5 +170,11 @@ namespace OutlookAddIn2013
         }
 
         #endregion
+
+        public void InvalidateRibbon()
+        {
+            if (ribbon != null) { this.ribbon.Invalidate(); }
+        }
+
     }
 }
