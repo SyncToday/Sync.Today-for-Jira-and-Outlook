@@ -31,6 +31,9 @@ module Log =
         tc.TrackException(ex)
         tc.Flush()
     
+    let warn (source:string) (ex:Exception)  =
+        log.Warning(ex, sprintf "Unhandled exception in %A" source)
+
     let view (ident:string) = 
         log.Information(sprintf "Form %s opened" ident )
         tc.TrackPageView(ident)

@@ -31,24 +31,32 @@ namespace OutlookAddIn2013
         public Ribbon Ribbon { get; set; }
 
         private void fixLocalIdStore() {
-            var s = Settings.Default;
-            var keys = new List<string>(s._KeysProcessed ?? (new string[] { }));
-            var ids = new List<string>(s._IdsCreated ?? (new string[] { }));
+            try {
+                var s = Settings.Default;
+                var keys = new List<string>(s._KeysProcessed ?? (new string[] { }));
+                var ids = new List<string>(s._IdsCreated ?? (new string[] { }));
 
-            foreach( var item in stor.tasks ) {
-                var task = item as Outlook.TaskItem;
-                if ( task == null ) continue;
-                var subject = task.Subject;
-                if (subject.StartsWith("#")) {
-                    var key = UI.getKeyFromTaskSubject(subject);
-                    keys.Add(key);
-                    ids.Add(task.EntryID);
+                foreach( var item in stor.tasks ) {
+                    try {
+                        var task = item as Outlook.TaskItem;
+                        if ( task == null ) continue;
+                        var subject = task.Subject;
+                        if (subject.StartsWith("#")) {
+                            var key = UI.getKeyFromTaskSubject(subject);
+                            keys.Add(key);
+                            ids.Add(task.EntryID);
+                        }
+                    } catch ( Exception ex ) {
+                        Log.warn("fixLocalIdStore item", ex);
+                    }
                 }
-            }
 
-            s._KeysProcessed = keys.ToArray();
-            s._IdsCreated = ids.ToArray();
-            s.Save();
+                s._KeysProcessed = keys.ToArray();
+                s._IdsCreated = ids.ToArray();
+                s.Save();
+            } catch ( Exception ex ) {
+                Log.warn("fixLocalIdStore Global", ex);
+            }
         }
 
         public void StopAutomaticSync()
