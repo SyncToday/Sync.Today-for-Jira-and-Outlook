@@ -1,4 +1,4 @@
-# Sync.Today-for-Jira-and-Outlook
+# Sync.Today for Jira and Outlook
 Jira issues to Outlook tasks
 
 
