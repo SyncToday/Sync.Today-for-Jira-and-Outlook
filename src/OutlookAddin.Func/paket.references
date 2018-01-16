@@ -1,0 +1,4 @@
+group Build
+Microsoft.ApplicationInsights.WindowsServer
+Destructurama.FSharp
+Serilog.Sinks.RollingFile

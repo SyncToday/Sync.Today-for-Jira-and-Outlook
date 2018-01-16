@@ -8,3 +8,4 @@ Jira issues to Outlook tasks
 -    Synchronizes Jira Issues to Outlook tasks 
 
 Atlassian Marketplace [Sync.Today for Jira and Outlook](https://marketplace.atlassian.com/plugins/software.hsharp.jira.outlook/server/overview).
+
